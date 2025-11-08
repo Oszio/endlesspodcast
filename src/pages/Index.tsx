@@ -4,42 +4,32 @@ import TopicCard from "@/components/TopicCard";
 import ChatSidebar from "@/components/ChatSidebar";
 import UsernamePrompt from "@/components/UsernamePrompt";
 import { toast } from "sonner";
-
-const topics = [
-  {
-    id: 1,
-    title: "AI & Creativity",
-    description: "Exploring how artificial intelligence enhances human creative expression",
-  },
-  {
-    id: 2,
-    title: "Ethics in Tech",
-    description: "Discussing responsible development and deployment of technology",
-  },
-  {
-    id: 3,
-    title: "Future of Design",
-    description: "Examining emerging trends in digital and physical design practices",
-  },
-];
-
+const topics = [{
+  id: 1,
+  title: "AI & Creativity",
+  description: "Exploring how artificial intelligence enhances human creative expression"
+}, {
+  id: 2,
+  title: "Ethics in Tech",
+  description: "Discussing responsible development and deployment of technology"
+}, {
+  id: 3,
+  title: "Future of Design",
+  description: "Examining emerging trends in digital and physical design practices"
+}];
 const Index = () => {
   const [username, setUsername] = useState<string>("");
   const [showPrompt, setShowPrompt] = useState(true);
-
   const handleUsernameSubmit = (newUsername: string) => {
     setUsername(newUsername);
     setShowPrompt(false);
   };
-
   const handleVote = (topicTitle: string) => {
     toast.success(`Voted for "${topicTitle}"`, {
-      description: "The agents will discuss this topic next",
+      description: "The agents will discuss this topic next"
     });
   };
-
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <UsernamePrompt open={showPrompt} onSubmit={handleUsernameSubmit} />
       <div className="flex flex-col lg:flex-row h-screen">
         {/* Main Content */}
@@ -63,18 +53,9 @@ const Index = () => {
 
             {/* Topic Cards */}
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-2xl font-semibold text-foreground mb-6 text-center">
-                Vote for Discussion Topics
-              </h2>
+              <h2 className="text-2xl font-semibold text-foreground mb-6 text-center">Vote for the next topic:</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {topics.map((topic) => (
-                  <TopicCard
-                    key={topic.id}
-                    title={topic.title}
-                    description={topic.description}
-                    onVote={() => handleVote(topic.title)}
-                  />
-                ))}
+                {topics.map(topic => <TopicCard key={topic.id} title={topic.title} description={topic.description} onVote={() => handleVote(topic.title)} />)}
               </div>
             </div>
           </div>
@@ -85,8 +66,6 @@ const Index = () => {
           <ChatSidebar username={username} />
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
