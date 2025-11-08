@@ -2,6 +2,7 @@ import { useState } from "react";
 import AgentAvatar from "@/components/AgentAvatar";
 import TopicCard from "@/components/TopicCard";
 import ChatSidebar from "@/components/ChatSidebar";
+import UsernamePrompt from "@/components/UsernamePrompt";
 import { toast } from "sonner";
 
 const topics = [
@@ -23,6 +24,14 @@ const topics = [
 ];
 
 const Index = () => {
+  const [username, setUsername] = useState<string>("");
+  const [showPrompt, setShowPrompt] = useState(true);
+
+  const handleUsernameSubmit = (newUsername: string) => {
+    setUsername(newUsername);
+    setShowPrompt(false);
+  };
+
   const handleVote = (topicTitle: string) => {
     toast.success(`Voted for "${topicTitle}"`, {
       description: "The agents will discuss this topic next",
@@ -31,6 +40,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <UsernamePrompt open={showPrompt} onSubmit={handleUsernameSubmit} />
       <div className="flex flex-col lg:flex-row h-screen">
         {/* Main Content */}
         <div className="flex-1 overflow-y-auto">
@@ -72,7 +82,7 @@ const Index = () => {
 
         {/* Chat Sidebar */}
         <div className="lg:w-96 h-64 lg:h-full">
-          <ChatSidebar />
+          <ChatSidebar username={username} />
         </div>
       </div>
     </div>

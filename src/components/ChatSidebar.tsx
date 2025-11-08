@@ -9,9 +9,14 @@ interface Message {
   text: string;
   sender: "user" | "ai";
   timestamp: Date;
+  username: string;
 }
 
-const ChatSidebar = () => {
+interface ChatSidebarProps {
+  username: string;
+}
+
+const ChatSidebar = ({ username }: ChatSidebarProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
 
@@ -22,6 +27,7 @@ const ChatSidebar = () => {
         text: inputValue,
         sender: "user",
         timestamp: new Date(),
+        username: username,
       };
       setMessages([...messages, newMessage]);
       setInputValue("");
@@ -48,6 +54,7 @@ const ChatSidebar = () => {
                     : "bg-accent text-accent-foreground"
                 }`}
               >
+                <p className="text-xs font-semibold mb-1 opacity-80">{message.username}</p>
                 <p className="text-sm">{message.text}</p>
                 <span className="text-xs opacity-70 mt-1 block">
                   {message.timestamp.toLocaleTimeString([], {
