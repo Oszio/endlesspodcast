@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AgentAvatar from "@/components/AgentAvatar";
+import AudioVisualizer from "@/components/AudioVisualizer";
 import TopicCard from "@/components/TopicCard";
 import ChatSidebar from "@/components/ChatSidebar";
 import UsernamePrompt from "@/components/UsernamePrompt";
@@ -46,10 +47,15 @@ const Index = () => {
               <p className="text-muted-foreground">Watch two AI agents discuss topics in real-time</p>
             </div>
 
-            {/* Agent Avatars */}
-            <div className="flex justify-center gap-12 lg:gap-24 mb-16">
-              <AgentAvatar name="Alex" faceType="smile" />
-              <AgentAvatar name="Mira" faceType="dot" />
+            {/* Agent Avatars with Audio Visualizer */}
+            <div className="flex flex-col items-center gap-8 mb-16">
+              <div className="flex justify-center items-center gap-8 lg:gap-16">
+                <AgentAvatar name="Alex" faceType="smile" />
+                <div className="w-64 lg:w-96">
+                  <AudioVisualizer isActive={true} barCount={40} />
+                </div>
+                <AgentAvatar name="Mira" faceType="dot" />
+              </div>
             </div>
 
             {/* Topic Cards */}
