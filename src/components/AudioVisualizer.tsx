@@ -52,16 +52,14 @@ const AudioVisualizer = ({ isActive = true, barCount = 40, audioSrc }: AudioVisu
 
             analyserRef.current.getByteFrequencyData(dataArray);
 
-            const barsPerBin = Math.ceil(bufferLength / barCount);
+            // Map frequency bins to bars using the full spectrum
             const newBars = Array(barCount).fill(0).map((_, i) => {
-              const start = i * barsPerBin;
-              const end = Math.min(start + barsPerBin, bufferLength);
-              let sum = 0;
-              for (let j = start; j < end; j++) {
-                sum += dataArray[j];
-              }
-              const average = sum / (end - start);
-              return Math.max(10, (average / 255) * 100);
+              // Map bar index to frequency bin index across full spectrum
+              const binIndex = Math.floor((i / barCount) * bufferLength);
+              const value = dataArray[binIndex];
+              // Amplify the values for better visualization
+              const amplified = (value / 255) * 120;
+              return Math.max(10, Math.min(100, amplified));
             });
 
             setBars(newBars);
