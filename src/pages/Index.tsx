@@ -47,9 +47,9 @@ const Index = () => {
           <div className="container mx-auto px-4 py-8 lg:py-12">
             {/* Header */}
             <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-foreground mb-2">
-                AI Conversation Space
-              </h1>
+            <h1 className="text-4xl font-bold text-foreground mb-2">
+              The Endless Podcast
+            </h1>
               <p className="text-muted-foreground">
                 Watch two AI agents discuss topics in real-time
               </p>
