@@ -5,6 +5,7 @@ import TopicCard from "@/components/TopicCard";
 import ChatSidebar from "@/components/ChatSidebar";
 import UsernamePrompt from "@/components/UsernamePrompt";
 import { toast } from "sonner";
+import testAudio from "@/assets/test-audio.mp3";
 
 const topics = [
   {
@@ -68,7 +69,7 @@ const Index = () => {
               <div className="flex justify-center items-center gap-4 lg:gap-8">
                 <AgentAvatar name="Alex" faceType="smile" isActive={true} volume={audioVolume} />
                 <div className="flex-1 max-w-xs">
-                  <AudioVisualizer isActive={true} barCount={40} onVolumeChange={handleVolumeChange} />
+                  <AudioVisualizer isActive={true} barCount={40} audioSrc={testAudio} onVolumeChange={handleVolumeChange} />
                 </div>
                 <AgentAvatar name="Mira" faceType="dot" isActive={false} volume={0} />
               </div>
