@@ -3,9 +3,11 @@ import { useState } from "react";
 interface AgentAvatarProps {
   name: string;
   faceType: "smile" | "dot";
+  isActive?: boolean;
+  volume?: number;
 }
 
-const AgentAvatar = ({ name, faceType }: AgentAvatarProps) => {
+const AgentAvatar = ({ name, faceType, isActive = false, volume = 0 }: AgentAvatarProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleHover = () => {
@@ -15,12 +17,18 @@ const AgentAvatar = ({ name, faceType }: AgentAvatarProps) => {
     }, 200);
   };
 
+  // Calculate scale based on volume when active (1.0 to 1.3)
+  const scale = isActive ? 1 + (volume * 0.3) : 1;
+
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="relative">
         <div
-          className="w-32 h-32 rounded-full bg-agent-bg border-2 border-border flex items-center justify-center overflow-hidden transition-transform hover:scale-105 duration-300 cursor-pointer"
+          className="w-32 h-32 rounded-full bg-agent-bg border-2 border-border flex items-center justify-center overflow-hidden transition-all duration-100 cursor-pointer"
           onMouseEnter={handleHover}
+          style={{
+            transform: `scale(${scale})`,
+          }}
         >
           {name === "Alex" ? (
             isHovered ? (

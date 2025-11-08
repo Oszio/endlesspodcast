@@ -4,9 +4,10 @@ interface AudioVisualizerProps {
   isActive?: boolean;
   barCount?: number;
   audioSrc?: string;
+  onVolumeChange?: (volume: number) => void;
 }
 
-const AudioVisualizer = ({ isActive = true, barCount = 40, audioSrc }: AudioVisualizerProps) => {
+const AudioVisualizer = ({ isActive = true, barCount = 40, audioSrc, onVolumeChange }: AudioVisualizerProps) => {
   const [bars, setBars] = useState<number[]>(Array(barCount).fill(20));
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -51,6 +52,16 @@ const AudioVisualizer = ({ isActive = true, barCount = 40, audioSrc }: AudioVisu
             if (!analyserRef.current || !isActive) return;
 
             analyserRef.current.getByteFrequencyData(dataArray);
+
+            // Calculate average volume for avatar scaling
+            let sum = 0;
+            for (let i = 0; i < bufferLength; i++) {
+              sum += dataArray[i];
+            }
+            const averageVolume = sum / bufferLength / 255;
+            if (onVolumeChange) {
+              onVolumeChange(averageVolume);
+            }
 
             // Map frequency bins to bars using the full spectrum
             const newBars = Array(barCount).fill(0).map((_, i) => {

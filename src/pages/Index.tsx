@@ -6,6 +6,7 @@ import ChatSidebar from "@/components/ChatSidebar";
 import UsernamePrompt from "@/components/UsernamePrompt";
 import { toast } from "sonner";
 import testAudio from "@/assets/test-audio.mp3";
+
 const topics = [
   {
     id: 1,
@@ -23,10 +24,12 @@ const topics = [
     description: "Examining emerging trends in digital and physical design practices",
   },
 ];
+
 const Index = () => {
   const [username, setUsername] = useState<string>("");
   const [showPrompt, setShowPrompt] = useState(true);
   const [votedTopicId, setVotedTopicId] = useState<number | null>(null);
+  const [audioVolume, setAudioVolume] = useState<number>(0);
   
   const handleUsernameSubmit = (newUsername: string) => {
     setUsername(newUsername);
@@ -44,6 +47,10 @@ const Index = () => {
       });
     }
   };
+
+  const handleVolumeChange = (volume: number) => {
+    setAudioVolume(volume);
+  };
   return (
     <div className="min-h-screen bg-background">
       <UsernamePrompt open={showPrompt} onSubmit={handleUsernameSubmit} />
@@ -60,11 +67,11 @@ const Index = () => {
             {/* Agent Avatars with Audio Visualizer */}
             <div className="max-w-5xl mx-auto mb-16">
               <div className="flex justify-center items-center gap-4 lg:gap-8">
-                <AgentAvatar name="Alex" faceType="smile" />
+                <AgentAvatar name="Alex" faceType="smile" isActive={true} volume={audioVolume} />
                 <div className="flex-1 max-w-xs">
-                  <AudioVisualizer isActive={true} barCount={40} audioSrc={testAudio} />
+                  <AudioVisualizer isActive={true} barCount={40} audioSrc={testAudio} onVolumeChange={handleVolumeChange} />
                 </div>
-                <AgentAvatar name="Mira" faceType="dot" />
+                <AgentAvatar name="Mira" faceType="dot" isActive={false} volume={0} />
               </div>
             </div>
 
