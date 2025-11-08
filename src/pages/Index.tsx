@@ -1,21 +1,34 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AgentAvatar from "@/components/AgentAvatar";
 import AudioVisualizer from "@/components/AudioVisualizer";
 import TopicCard from "@/components/TopicCard";
-import ChatSidebar, { type Message } from "@/components/ChatSidebar";
+import ChatSidebar from "@/components/ChatSidebar";
 import UsernamePrompt from "@/components/UsernamePrompt";
 import { toast } from "sonner";
-import { fetchTopicSuggestions, type Topic } from "@/lib/api";
 
+const topics = [
+  {
+    id: 1,
+    title: "AI & Creativity",
+    description: "Exploring how artificial intelligence enhances human creative expression",
+  },
+  {
+    id: 2,
+    title: "Ethics in Tech",
+    description: "Discussing responsible development and deployment of technology",
+  },
+  {
+    id: 3,
+    title: "Future of Design",
+    description: "Examining emerging trends in digital and physical design practices",
+  },
+];
 
 const Index = () => {
   const [username, setUsername] = useState<string>("");
   const [showPrompt, setShowPrompt] = useState(true);
   const [votedTopicId, setVotedTopicId] = useState<number | null>(null);
   const [audioVolume, setAudioVolume] = useState<number>(0);
-  const [topics, setTopics] = useState<Topic[]>([]);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoadingTopics, setIsLoadingTopics] = useState(false);
   
   const handleUsernameSubmit = (newUsername: string) => {
     setUsername(newUsername);
@@ -36,24 +49,6 @@ const Index = () => {
 
   const handleVolumeChange = (volume: number) => {
     setAudioVolume(volume);
-  };
-
-  const handleMessagesChange = async (newMessages: Message[]) => {
-    setMessages(newMessages);
-    setIsLoadingTopics(true);
-    
-    const chatMessages = newMessages.map(msg => ({
-      text: msg.text,
-      sender: msg.username,
-      timestamp: msg.timestamp.toISOString(),
-    }));
-    
-    const newTopics = await fetchTopicSuggestions(chatMessages);
-    if (newTopics.length > 0) {
-      setTopics(newTopics);
-      toast.info("Topic suggestions updated based on conversation");
-    }
-    setIsLoadingTopics(false);
   };
   return (
     <div className="min-h-screen bg-background">
@@ -81,34 +76,26 @@ const Index = () => {
 
             {/* Topic Cards */}
             <div className="max-w-5xl mx-auto">
-              <h2 className="text-2xl font-semibold text-foreground mb-6 text-center">
-                {isLoadingTopics ? "Generating topic suggestions..." : "Vote for the next topic:"}
-              </h2>
-              {topics.length === 0 ? (
-                <p className="text-center text-muted-foreground">
-                  Start a conversation to see AI-generated topic suggestions
-                </p>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {topics.map((topic) => (
-                    <TopicCard
-                      key={topic.id}
-                      title={topic.title}
-                      description={topic.description}
-                      isVoted={votedTopicId === topic.id}
-                      disabled={votedTopicId !== null && votedTopicId !== topic.id}
-                      onVote={() => handleVote(topic.id, topic.title)}
-                    />
-                  ))}
-                </div>
-              )}
+              <h2 className="text-2xl font-semibold text-foreground mb-6 text-center">Vote for the next topic:</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {topics.map((topic) => (
+                  <TopicCard
+                    key={topic.id}
+                    title={topic.title}
+                    description={topic.description}
+                    isVoted={votedTopicId === topic.id}
+                    disabled={votedTopicId !== null && votedTopicId !== topic.id}
+                    onVote={() => handleVote(topic.id, topic.title)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Chat Sidebar */}
         <div className="lg:w-96 h-64 lg:h-full">
-          <ChatSidebar username={username} onMessagesChange={handleMessagesChange} />
+          <ChatSidebar username={username} />
         </div>
       </div>
     </div>

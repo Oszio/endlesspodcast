@@ -4,64 +4,6 @@
 
 **URL**: https://lovable.dev/projects/1a7e2ecf-dc35-45b6-a632-91ad573e2688
 
-## Backend Connection
-
-This frontend connects to a Python backend hosted at: [https://github.com/DataAthleteChamp/Unlimited_Podcast](https://github.com/DataAthleteChamp/Unlimited_Podcast)
-
-### Setting Up the Backend Connection
-
-To connect this frontend to your Python backend:
-
-1. **Clone and start your Python backend server**
-   ```bash
-   git clone https://github.com/DataAthleteChamp/Unlimited_Podcast.git
-   cd Unlimited_Podcast
-   # Follow the setup instructions in the backend repository
-   ```
-   - Ensure the backend is running and accessible
-
-2. **Configure the API endpoint**
-   - Add your backend URL to the `.env` file:
-     ```
-     VITE_API_URL="http://localhost:8000"  # or your production URL
-     ```
-   - Update this URL based on your environment (local development vs production)
-
-3. **Handle CORS (if needed)**
-   - Make sure your Python backend allows requests from this frontend
-   - Configure CORS headers in your Python backend (e.g., using Flask-CORS or FastAPI middleware)
-
-4. **API Integration**
-   - Use `fetch` or `axios` to make requests to your backend
-   - Example:
-     ```typescript
-     const API_URL = import.meta.env.VITE_API_URL;
-     const response = await fetch(`${API_URL}/api/endpoint`);
-     ```
-
-### Backend API Endpoints
-
-The frontend expects the following endpoints from the Python backend:
-
-- **POST `/api/topics/suggestions`**: Generate topic suggestions based on chat messages
-  - Request body: `{ messages: [{ text: string, sender: string, timestamp: string }] }`
-  - Response: `[{ id: number, title: string, description: string }]`
-
-Additional endpoints may be required for:
-- Real-time audio streaming
-- Agent conversation management
-- User voting/interaction tracking
-
-### Environment Variables
-
-Add any necessary API keys or configuration to `.env`:
-```
-VITE_API_URL="your-backend-url"
-VITE_API_KEY="your-api-key"  # if needed
-```
-
-**Note**: Environment variables in Vite must be prefixed with `VITE_` to be accessible in the frontend code.
-
 ## How can I edit this code?
 
 There are several ways of editing your application.
