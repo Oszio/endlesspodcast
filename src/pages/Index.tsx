@@ -33,10 +33,15 @@ const Index = () => {
   };
   
   const handleVote = (topicId: number, topicTitle: string) => {
-    setVotedTopicId(topicId);
-    toast.success(`Voted for "${topicTitle}"`, {
-      description: "The agents will discuss this topic next",
-    });
+    if (votedTopicId === topicId) {
+      setVotedTopicId(null);
+      toast.info(`Removed vote for "${topicTitle}"`);
+    } else {
+      setVotedTopicId(topicId);
+      toast.success(`Voted for "${topicTitle}"`, {
+        description: "The agents will discuss this topic next",
+      });
+    }
   };
   return (
     <div className="min-h-screen bg-background">

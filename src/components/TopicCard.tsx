@@ -15,9 +15,9 @@ const TopicCard = ({ title, description, isVoted = false, disabled = false, onVo
 
   const handleVote = () => {
     if (disabled) return;
+    onVote();
     if (!isVoted) {
       setVotes((prev) => prev + 1);
-      onVote();
     }
   };
 
@@ -39,7 +39,7 @@ const TopicCard = ({ title, description, isVoted = false, disabled = false, onVo
           disabled={disabled}
           className="transition-all duration-200"
         >
-          {isVoted ? "Voted" : "Vote"}
+          {isVoted ? "Remove Vote" : "Vote"}
         </Button>
         
         {votes > 0 && (
