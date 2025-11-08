@@ -49,9 +49,9 @@ const Index = () => {
 
             {/* Agent Avatars with Audio Visualizer */}
             <div className="max-w-5xl mx-auto mb-16">
-              <div className="flex justify-between items-center gap-4">
+              <div className="flex justify-center items-center gap-8 lg:gap-16">
                 <AgentAvatar name="Alex" faceType="smile" />
-                <div className="flex-1 px-8">
+                <div className="flex-1 max-w-md">
                   <AudioVisualizer isActive={true} barCount={40} />
                 </div>
                 <AgentAvatar name="Mira" faceType="dot" />
