@@ -12,9 +12,13 @@ interface Message {
 }
 interface ChatSidebarProps {
   username: string;
+  onMessagesChange?: (messages: Message[]) => void;
 }
+
+export type { Message };
 const ChatSidebar = ({
-  username
+  username,
+  onMessagesChange
 }: ChatSidebarProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -27,8 +31,10 @@ const ChatSidebar = ({
         timestamp: new Date(),
         username: username
       };
-      setMessages([...messages, newMessage]);
+      const updatedMessages = [...messages, newMessage];
+      setMessages(updatedMessages);
       setInputValue("");
+      onMessagesChange?.(updatedMessages);
     }
   };
   return <div className="flex flex-col h-full bg-card border-l border-border">
