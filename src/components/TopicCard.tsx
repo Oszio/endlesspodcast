@@ -16,7 +16,9 @@ const TopicCard = ({ title, description, isVoted = false, disabled = false, onVo
   const handleVote = () => {
     if (disabled) return;
     onVote();
-    if (!isVoted) {
+    if (isVoted) {
+      setVotes((prev) => prev - 1);
+    } else {
       setVotes((prev) => prev + 1);
     }
   };
