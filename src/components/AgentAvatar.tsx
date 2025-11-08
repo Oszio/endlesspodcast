@@ -6,12 +6,7 @@ interface AgentAvatarProps {
 }
 
 const AgentAvatar = ({ name, faceType }: AgentAvatarProps) => {
-  const [reactions, setReactions] = useState({ heart: 0, thumbsDown: 0, laugh: 0 });
   const [isHovered, setIsHovered] = useState(false);
-
-  const handleReaction = (type: keyof typeof reactions) => {
-    setReactions((prev) => ({ ...prev, [type]: prev[type] + 1 }));
-  };
 
   const handleHover = () => {
     setIsHovered(true);
@@ -53,27 +48,6 @@ const AgentAvatar = ({ name, faceType }: AgentAvatarProps) => {
       
       <div className="text-center">
         <p className="font-medium text-foreground">{name}</p>
-      </div>
-
-      <div className="flex gap-2">
-        {[
-          { emoji: "❤️", type: "heart" as const },
-          { emoji: "👎", type: "thumbsDown" as const },
-          { emoji: "😂", type: "laugh" as const },
-        ].map(({ emoji, type }) => (
-          <button
-            key={type}
-            onClick={() => handleReaction(type)}
-            className="group relative px-3 py-2 rounded-lg bg-card border border-border hover:bg-reaction-hover hover:border-accent transition-all duration-200 hover:scale-110"
-          >
-            <span className="text-xl">{emoji}</span>
-            {reactions[type] > 0 && (
-              <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium animate-scale-in">
-                {reactions[type]}
-              </span>
-            )}
-          </button>
-        ))}
       </div>
     </div>
   );
