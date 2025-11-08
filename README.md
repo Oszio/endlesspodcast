@@ -6,49 +6,52 @@
 
 ## Backend Connection
 
-This project is connected to a Supabase backend for data persistence, authentication, and serverless functions.
+This frontend connects to a separate Python backend hosted in another GitHub repository.
 
-### Supabase Configuration
+### Setting Up the Backend Connection
 
-The project uses the following Supabase credentials (already configured in `.env`):
+To connect this frontend to your Python backend:
 
-- **Project ID**: `xxczlixdprhsdcyfprfx`
-- **Supabase URL**: `https://xxczlixdprhsdcyfprfx.supabase.co`
-- **Anon Key**: Available in `.env` file
+1. **Start your Python backend server**
+   - Clone and set up your Python backend repository
+   - Ensure the backend is running and accessible
 
-### Connecting to Your Own Backend
+2. **Configure the API endpoint**
+   - Add your backend URL to the `.env` file:
+     ```
+     VITE_API_URL="http://localhost:8000"  # or your production URL
+     ```
+   - Update this URL based on your environment (local development vs production)
 
-If you want to connect this project to your own Supabase instance:
+3. **Handle CORS (if needed)**
+   - Make sure your Python backend allows requests from this frontend
+   - Configure CORS headers in your Python backend (e.g., using Flask-CORS or FastAPI middleware)
 
-1. Create a new project at [https://supabase.com](https://supabase.com)
-2. Get your project credentials from the Supabase dashboard (Settings → API)
-3. Update the `.env` file with your credentials:
-   ```
-   VITE_SUPABASE_PROJECT_ID="your-project-id"
-   VITE_SUPABASE_URL="https://your-project-id.supabase.co"
-   VITE_SUPABASE_PUBLISHABLE_KEY="your-anon-key"
-   ```
-4. Update `supabase/config.toml` with your project ID:
-   ```toml
-   project_id = "your-project-id"
-   ```
-5. Run any pending migrations to set up your database schema
-6. Deploy edge functions (they will auto-deploy when you push changes)
+4. **API Integration**
+   - Use `fetch` or `axios` to make requests to your backend
+   - Example:
+     ```typescript
+     const API_URL = import.meta.env.VITE_API_URL;
+     const response = await fetch(`${API_URL}/api/endpoint`);
+     ```
 
-### Backend Features
+### Backend Requirements
 
-- **Database**: PostgreSQL database with Row Level Security (RLS)
-- **Authentication**: Built-in user authentication and session management
-- **Edge Functions**: Serverless functions in `supabase/functions/`
-- **Storage**: File storage capabilities (if configured)
+Your Python backend should handle:
+- API endpoints for data operations
+- Authentication (if needed)
+- WebSocket connections (if real-time features are required)
+- Any business logic and data processing
 
-### Managing Secrets
+### Environment Variables
 
-For edge functions that require API keys or secrets:
-1. Go to your Supabase dashboard
-2. Navigate to Settings → Edge Functions
-3. Add your secrets as environment variables
-4. Reference them in your edge functions using `Deno.env.get('SECRET_NAME')`
+Add any necessary API keys or configuration to `.env`:
+```
+VITE_API_URL="your-backend-url"
+VITE_API_KEY="your-api-key"  # if needed
+```
+
+**Note**: Environment variables in Vite must be prefixed with `VITE_` to be accessible in the frontend code.
 
 ## How can I edit this code?
 
