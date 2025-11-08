@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send } from "lucide-react";
 
 interface Message {
   id: number;
@@ -13,20 +10,6 @@ interface Message {
 
 const ChatSidebar = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState("");
-
-  const handleSend = () => {
-    if (inputValue.trim()) {
-      const newMessage: Message = {
-        id: messages.length + 1,
-        text: inputValue,
-        sender: "user",
-        timestamp: new Date(),
-      };
-      setMessages([...messages, newMessage]);
-      setInputValue("");
-    }
-  };
 
   return (
     <div className="flex flex-col h-full bg-card border-l border-border">
@@ -60,21 +43,6 @@ const ChatSidebar = () => {
           ))}
         </div>
       </ScrollArea>
-
-      <div className="p-4 border-t border-border">
-        <div className="flex gap-2">
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSend()}
-            placeholder="Type your message..."
-            className="flex-1"
-          />
-          <Button onClick={handleSend} size="icon" className="shrink-0">
-            <Send className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };
