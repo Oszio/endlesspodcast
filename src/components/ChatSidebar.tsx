@@ -12,14 +12,7 @@ interface Message {
 }
 
 const ChatSidebar = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      text: "Welcome to the conversation! React and share your thoughts.",
-      sender: "ai",
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
 
   const handleSend = () => {
@@ -32,19 +25,6 @@ const ChatSidebar = () => {
       };
       setMessages([...messages, newMessage]);
       setInputValue("");
-
-      // Simulate AI response
-      setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: prev.length + 1,
-            text: "Thanks for sharing! The agents are discussing this now.",
-            sender: "ai",
-            timestamp: new Date(),
-          },
-        ]);
-      }, 1000);
     }
   };
 
