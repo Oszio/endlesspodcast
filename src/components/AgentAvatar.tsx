@@ -17,8 +17,10 @@ const AgentAvatar = ({ name, faceType, isActive = false, volume = 0 }: AgentAvat
     }, 200);
   };
 
-  // Calculate scale based on volume when active (1.0 to 1.3)
-  const scale = isActive ? 1 + (volume * 0.3) : 1;
+  // Calculate scale based on volume when active (1.0 to 1.6 for more noticeable effect)
+  const scale = isActive ? 1 + (volume * 0.6) : 1;
+  // Counter-scale for SVG to keep it at original size
+  const svgScale = 1 / scale;
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -30,6 +32,12 @@ const AgentAvatar = ({ name, faceType, isActive = false, volume = 0 }: AgentAvat
             transform: `scale(${scale})`,
           }}
         >
+          <div
+            style={{
+              transform: `scale(${svgScale})`,
+              transition: 'transform 100ms ease-out',
+            }}
+          >
           {name === "Alex" ? (
             isHovered ? (
               <svg
@@ -89,6 +97,7 @@ const AgentAvatar = ({ name, faceType, isActive = false, volume = 0 }: AgentAvat
               />
             </svg>
           )}
+          </div>
         </div>
       </div>
 
