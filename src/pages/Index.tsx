@@ -25,11 +25,15 @@ const topics = [
 const Index = () => {
   const [username, setUsername] = useState<string>("");
   const [showPrompt, setShowPrompt] = useState(true);
+  const [votedTopicId, setVotedTopicId] = useState<number | null>(null);
+  
   const handleUsernameSubmit = (newUsername: string) => {
     setUsername(newUsername);
     setShowPrompt(false);
   };
-  const handleVote = (topicTitle: string) => {
+  
+  const handleVote = (topicId: number, topicTitle: string) => {
+    setVotedTopicId(topicId);
     toast.success(`Voted for "${topicTitle}"`, {
       description: "The agents will discuss this topic next",
     });
@@ -67,7 +71,9 @@ const Index = () => {
                     key={topic.id}
                     title={topic.title}
                     description={topic.description}
-                    onVote={() => handleVote(topic.title)}
+                    isVoted={votedTopicId === topic.id}
+                    disabled={votedTopicId !== null && votedTopicId !== topic.id}
+                    onVote={() => handleVote(topic.id, topic.title)}
                   />
                 ))}
               </div>
