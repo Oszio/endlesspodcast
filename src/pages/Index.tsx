@@ -47,7 +47,7 @@ const Index = () => {
 
             {/* Agent Avatars */}
             <div className="flex justify-center gap-12 lg:gap-24 mb-16">
-              <AgentAvatar name="Agent A" faceType="smile" />
+              <AgentAvatar name="Alex" faceType="smile" />
               <AgentAvatar name="Agent B" faceType="dot" />
             </div>
 
