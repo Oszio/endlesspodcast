@@ -6,18 +6,14 @@
 
 ## Backend Connection
 
-This frontend connects to a Python backend hosted at: [https://github.com/DataAthleteChamp/Unlimited_Podcast](https://github.com/DataAthleteChamp/Unlimited_Podcast)
+This frontend connects to a separate Python backend hosted in another GitHub repository.
 
 ### Setting Up the Backend Connection
 
 To connect this frontend to your Python backend:
 
-1. **Clone and start your Python backend server**
-   ```bash
-   git clone https://github.com/DataAthleteChamp/Unlimited_Podcast.git
-   cd Unlimited_Podcast
-   # Follow the setup instructions in the backend repository
-   ```
+1. **Start your Python backend server**
+   - Clone and set up your Python backend repository
    - Ensure the backend is running and accessible
 
 2. **Configure the API endpoint**
@@ -39,18 +35,13 @@ To connect this frontend to your Python backend:
      const response = await fetch(`${API_URL}/api/endpoint`);
      ```
 
-### Backend API Endpoints
+### Backend Requirements
 
-The frontend expects the following endpoints from the Python backend:
-
-- **POST `/api/topics/suggestions`**: Generate topic suggestions based on chat messages
-  - Request body: `{ messages: [{ text: string, sender: string, timestamp: string }] }`
-  - Response: `[{ id: number, title: string, description: string }]`
-
-Additional endpoints may be required for:
-- Real-time audio streaming
-- Agent conversation management
-- User voting/interaction tracking
+Your Python backend should handle:
+- API endpoints for data operations
+- Authentication (if needed)
+- WebSocket connections (if real-time features are required)
+- Any business logic and data processing
 
 ### Environment Variables
 
